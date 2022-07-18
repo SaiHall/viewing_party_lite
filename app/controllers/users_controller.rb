@@ -7,8 +7,8 @@ class UsersController < ApplicationController
     if user.save
       redirect_to "/users/#{user.id}"
     else
-      flash[:notice] = "Please enter a valid name and email address to register."
       redirect_to "/register"
+      flash[:notice] = user.errors.full_messages.last
     end
   end
 
