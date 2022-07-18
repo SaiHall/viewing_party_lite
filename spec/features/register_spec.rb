@@ -10,6 +10,8 @@ RSpec.describe "User Registration Page", type: :feature do
     visit "/register"
     expect(page).to have_field(:name)
     expect(page).to have_field(:email)
+    expect(page).to have_field(:password)
+    expect(page).to have_field(:password_confirmation)
     expect(page).to have_button("Register")
   end
 
@@ -19,6 +21,8 @@ RSpec.describe "User Registration Page", type: :feature do
 
     fill_in :name, with: 'Casey'
     fill_in :email, with: 'EternalPancakes@Geemail.com'
+    fill_in :password, with: 'LetMeIn'
+    fill_in :password_confirmation, with: 'LetMeIn'
     click_button("Register")
 
     expect(page).to have_current_path("/users/#{last_user.id + 1}")
