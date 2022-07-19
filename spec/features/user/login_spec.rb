@@ -17,7 +17,7 @@ RSpec.describe 'the login page', type: :feature do
     fill_in :password, with: 'no-u'
     click_button("Log In")
 
-    expect(page).to have_current_path("/users/#{user1.id}")
+    expect(page).to have_current_path("/dashboard")
   end
 
   it 'will not log a user in with the wrong password' do

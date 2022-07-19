@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     user = User.create(user_params)
     if user.save
       session[:user_id] = user.id
-      redirect_to "/users/#{user.id}"
+      redirect_to "/dashboard"
     else
       redirect_to "/register"
       flash[:notice] = user.errors.full_messages.last
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
     @invited = ViewingParty.invited(@user)
   end
 
