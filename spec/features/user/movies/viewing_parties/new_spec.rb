@@ -17,19 +17,19 @@ RSpec.describe "New Viewing Party page", type: :feature do
   end
 
   it 'displays movie title', :vcr do
-    visit "/users/#{@user1.id}/movies/238/viewing-party/new"
+    visit "/movies/238/viewing-party/new"
 
     expect(page).to have_content("The Godfather")
   end
 
   it 'autopopulations duration of movie runtime', :vcr do
-    visit "/users/#{@user1.id}/movies/238/viewing-party/new"
+    visit "/movies/238/viewing-party/new"
 
     expect(page).to have_field(:duration, with: 175)
   end
 
   it 'has form to create a viewing party', :vcr do
-    visit "/users/#{@user1.id}/movies/238/viewing-party/new"
+    visit "/movies/238/viewing-party/new"
 
     fill_in('Duration', with: 180)
     fill_in('Date', with: "08/23/22")

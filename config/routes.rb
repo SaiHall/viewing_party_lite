@@ -3,18 +3,18 @@ Rails.application.routes.draw do
 
   get '/', to: 'landing#index'
 
-  get '/login', to: 'users#login_form' #login controller??
-  post '/login', to: 'users#login_user'
+  get '/login', to: 'session#new' #login controller??
+  post '/login', to: 'session#create'
 
 
   get '/register', to: 'users#new'
   post '/register', to: 'users#create'
 
-  get '/users/:id', to: 'users#show'
-  get '/users/:id/discover', to: 'users#discover'
-  get '/users/:id/movies', to: 'movies#index'
-  get '/users/:id/movies/:movie_id', to: 'movies#show'
+  get '/dashboard', to: 'users#show'
+  get '/discover', to: 'users#discover'
+  get '/movies', to: 'movies#index'
+  get '/movies/:movie_id', to: 'movies#show'
 
-  get '/users/:id/movies/:movie_id/viewing-party/new', to: 'viewing_parties#new'
-  post '/users/:id/movies/:movie_id/viewing-party/new', to: 'viewing_parties#create'
+  get '/movies/:movie_id/viewing-party/new', to: 'viewing_parties#new'
+  post '/movies/:movie_id/viewing-party/new', to: 'viewing_parties#create'
 end

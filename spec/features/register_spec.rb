@@ -26,7 +26,7 @@ RSpec.describe "User Registration Page", type: :feature do
 
     last_user = User.all.last
 
-    expect(page).to have_current_path("/users/#{last_user.id}")
+    expect(page).to have_current_path("/dashboard")
     expect(page).to_not have_content('Please enter a valid name and email address to register.')
   end
 

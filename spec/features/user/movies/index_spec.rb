@@ -4,10 +4,12 @@ RSpec.describe "User Movie Results Page", type: :feature do
   before :each do
     @user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
     @user2 = User.create!(name: 'Parker', email: 'GriffithDidNothing@Wrong.com', password: 'no-u', password_confirmation: 'no-u')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+
   end
   describe 'discover movie button' do
     it 'shows movie title and vote average when query is top 20', :vcr do
-      visit "/users/#{@user2.id}/discover"
+      visit "/discover"
 
       click_button("Discover Top Rated Movies")
 
@@ -15,7 +17,7 @@ RSpec.describe "User Movie Results Page", type: :feature do
     end
 
     it 'has links that are movie titles', :vcr do
-      visit "/users/#{@user2.id}/discover"
+      visit "/discover"
 
       click_button("Discover Top Rated Movies")
 
@@ -23,30 +25,30 @@ RSpec.describe "User Movie Results Page", type: :feature do
     end
 
     it 'has movie title links that lead to the correct path', :vcr do
-      visit "/users/#{@user2.id}/movies?q=top+20rated"
+      visit "/movies?q=top+20rated"
 
       click_link("The Godfather")
 
-      expect(page).to have_current_path("/users/#{@user2.id}/movies/238")
+      expect(page).to have_current_path("/movies/238")
     end
 
     it 'has the correct page title', :vcr do
-      visit "/users/#{@user2.id}/movies?q=top+20rated"
+      visit "/movies?q=top+20rated"
 
       expect(page).to have_content("Top Rated Movies")
     end
 
     it 'has a functioning button to return to the discover page', :vcr do
-      visit "/users/#{@user2.id}/movies?q=top+20rated"
+      visit "/movies?q=top+20rated"
 
       click_button("Discover Page")
-      expect(page).to have_current_path("/users/#{@user2.id}/discover")
+      expect(page).to have_current_path("/discover")
     end
   end
 
   describe 'search bar' do
     it 'returns matches and partial matches based off entered keyword', :vcr do
-      visit "/users/#{@user2.id}/discover"
+      visit "/discover"
 
       fill_in(:q, with: 'castle')
       click_button("Search by Movie Title")
@@ -58,7 +60,7 @@ RSpec.describe "User Movie Results Page", type: :feature do
     end
 
     it 'has the correct page title', :vcr do
-      visit "/users/#{@user2.id}/discover"
+      visit "/discover"
 
       fill_in(:q, with: 'castle')
       click_button("Search by Movie Title")
@@ -67,13 +69,13 @@ RSpec.describe "User Movie Results Page", type: :feature do
     end
 
     it 'has a functioning button to return to the discover page', :vcr do
-      visit "/users/#{@user2.id}/discover"
+      visit "/discover"
 
       fill_in(:q, with: 'castle')
       click_button("Search by Movie Title")
 
       click_button("Discover Page")
-      expect(page).to have_current_path("/users/#{@user2.id}/discover")
+      expect(page).to have_current_path("/discover")
     end
   end
 end

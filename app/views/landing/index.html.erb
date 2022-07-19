@@ -6,6 +6,6 @@
 <% @users.each_with_index do |user, index| %>
 <div id="user-<%= index %>">
   <p><%= user.name %></p>
-  <h4><%= link_to "#{user.name}'s Dashboard", "/users/#{user.id}" %></h4>
+  <p><%= user.email %></p>
 </div>
 <% end %>

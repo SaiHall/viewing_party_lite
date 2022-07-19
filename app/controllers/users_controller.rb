@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.save
-      redirect_to "/users/#{user.id}"
+      session[:user_id] = user.id
+      redirect_to "/dashboard"
     else
       redirect_to "/register"
       flash[:notice] = user.errors.full_messages.last
@@ -13,26 +14,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
     @invited = ViewingParty.invited(@user)
   end
 
   def discover
-    @user = User.find(params[:id])
-  end
-
-  def login_form
-  end
-
-  def login_user
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      flash[:success] = "Welcome, #{user.email}!"
-      redirect_to "/users/#{user.id}"
-    else
-      flash[:error] = "Invalid Credentials: Please try again"
-      render :login_form
-    end
+    @user = current_user
   end
 
   def user_params
