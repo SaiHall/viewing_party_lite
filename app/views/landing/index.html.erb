@@ -1,6 +1,12 @@
 </h5><h1>Viewing Party Lite</h1>
-<%= button_to "Create New User", "/register", method: :get %>
-<%= link_to "Log In", "/login" %>
+
+<% if current_user %>
+  <%= link_to "Log Out", "/", method: :delete %>
+<% else %>
+  <%= button_to "Create New User", "/register", method: :get %>
+  <%= link_to "Log In", "/login" %>
+<% end %>
+
 
 <h3>Existing Users</h3>
 <% @users.each_with_index do |user, index| %>
