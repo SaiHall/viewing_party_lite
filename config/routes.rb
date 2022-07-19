@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   get '/', to: 'landing#index'
 
-  get '/login', to: 'users#login_form' #login controller??
-  post '/login', to: 'users#login_user'
+  get '/login', to: 'session#new' #login controller??
+  post '/login', to: 'session#create'
 
 
   get '/register', to: 'users#new'
