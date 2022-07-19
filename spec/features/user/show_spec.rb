@@ -7,11 +7,11 @@ RSpec.describe "User Dash/Show page", type: :feature do
     @user2 = User.create!(name: 'Parker', email: 'GriffithDidNothing@Wrong.com', password: 'no-u', password_confirmation: 'no-u')
     @user3 = User.create!(name: 'Deannah', email: 'FrogStomper9000@Muahaha.com', password: 'no-u', password_confirmation: 'no-u')
     @user4 = User.create!(name: 'Casey', email: 'EternalPancakes@Geemail.com', password: 'no-u', password_confirmation: 'no-u')
-
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
   end
 
   it 'displays the users name at the top of the page' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+
     visit "/dashboard"
 
     expect(page).to have_content(@user2.name)
@@ -20,18 +20,28 @@ RSpec.describe "User Dash/Show page", type: :feature do
   end
 
   it 'has a button to discover movies' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+
     visit "/dashboard"
 
     expect(page).to have_button("Discover Movies")
   end
 
   it 'button to discover movies redirects to discover page' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+
     visit "/dashboard"
 
     click_button("Discover Movies")
 
     expect(current_path).to eq("/discover")
     # expect(current_path).to_not eq("/users/#{@user1.id}/discover")
+  end
+
+  it 'routes back to landing page if no user logged in' do
+    visit "/dashboard"
+
+    expect(page).to have_current_path('/')
   end
 
   describe 'viewing party section' do
