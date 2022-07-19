@@ -1,17 +1,16 @@
 </h5><h1>Viewing Party Lite</h1>
 
 <% if current_user %>
-  <%= link_to "Log Out", "/", method: :delete %>
+  <%= link_to "Log Out", "/", method: :delete %><br>
+
+  <h3>Existing Users</h3>
+  <% @users.each_with_index do |user, index| %>
+  <div id="user-<%= index %>">
+    <p><%= user.name %></p>
+    <p><%= user.email %></p>
+  </div>
+  <% end %>
 <% else %>
   <%= button_to "Create New User", "/register", method: :get %>
   <%= link_to "Log In", "/login" %>
-<% end %>
-
-
-<h3>Existing Users</h3>
-<% @users.each_with_index do |user, index| %>
-<div id="user-<%= index %>">
-  <p><%= user.name %></p>
-  <p><%= user.email %></p>
-</div>
 <% end %>
