@@ -52,11 +52,28 @@ RSpec.describe 'the landing page', type: :feature do
   end
 
   it 'has a logout option if a user is logged in' do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+    user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user1)
 
     visit '/'
 
     expect(page).to have_link("Log Out")
     expect(page).to_not have_link("Log In")
+  end
+
+  it 'clicking log out link will log out the current user' do
+    user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
+    visit '/login'
+
+    fill_in :email, with: 'SaiLent@overlord.com'
+    fill_in :password, with: 'no-u'
+    click_button("Log In")
+
+    visit '/'
+
+    click_link("Log Out")
+    expect(page).to have_current_path('/')
+    expect(page).to have_link("Log In")
+    expect(page).to have_button("Create New User")
   end
 end
