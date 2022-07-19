@@ -14,8 +14,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
-    @invited = ViewingParty.invited(@user)
+    if current_user
+      @user = current_user
+      @invited = ViewingParty.invited(@user)
+    else
+      redirect_to '/'
+      flash[:notice] = "Please log in or register to view this page"
+    end
   end
 
   def discover

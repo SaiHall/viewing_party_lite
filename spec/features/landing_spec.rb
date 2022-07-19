@@ -15,9 +15,10 @@ RSpec.describe 'the landing page', type: :feature do
     expect(page).to have_current_path("/register")
   end
 
-  it 'has list of existing users' do
+  it 'has list of existing users if logged in to view' do
     user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
     user2 = User.create!(name: 'Deannah', email: 'DMB@donuts.com', password: 'no-u', password_confirmation: 'no-u')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user1)
 
     visit '/'
     expect(page).to have_content("Existing Users")
@@ -31,16 +32,18 @@ RSpec.describe 'the landing page', type: :feature do
         expect(page).to_not have_content("Sai")
       end
     end
-# Test removed, function removed
-  # it 'each existing user links to user dashboard' do
-  #   user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
-  #   user2 = User.create!(name: 'Deannah', email: 'DMB@donuts.com', password: 'no-u', password_confirmation: 'no-u')
-  #
-  #   visit '/'
-  #   click_link("Sai's Dashboard")
-  #   expect(current_path).to eq("/dashboard")
-  #   # expect(current_path).to_not eq("/users/#{user2.id}")
-  # end
+
+  it 'each existing user shows an email when logged in' do
+    user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
+    user2 = User.create!(name: 'Deannah', email: 'DMB@donuts.com', password: 'no-u', password_confirmation: 'no-u')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user1)
+
+    visit '/'
+    expect(page).to have_content("Sai")
+    expect(page).to have_content("Deannah")
+    expect(page).to have_content("SaiLent@overlord.com")
+    expect(page).to have_content("DMB@donuts.com")
+  end
 
   it 'has a link to the log in page' do
     visit '/'
@@ -75,5 +78,15 @@ RSpec.describe 'the landing page', type: :feature do
     expect(page).to have_current_path('/')
     expect(page).to have_link("Log In")
     expect(page).to have_button("Create New User")
+  end
+
+  it 'will not show all users to a visitor' do
+    user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
+    user2 = User.create!(name: 'Deannah', email: 'DMB@donuts.com', password: 'no-u', password_confirmation: 'no-u')
+
+    visit '/'
+    expect(page).to_not have_content("Existing Users")
+    expect(page).to_not have_content("Sai")
+    expect(page).to_not have_content("Deannah")
   end
 end
