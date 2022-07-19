@@ -1,10 +1,10 @@
-<%= button_to "Discover Page", "/users/#{@user.id}/discover", method: :get, local: true %>
+<%= button_to "Discover Page", "/discover", method: :get, local: true %>
 <h1><% if params[:commit]%>
         <%= "Movie results for: #{params[:q]}"%>
       <% else %>
         <%= "Top Rated Movies" %>
       <% end %></h1>
 <% @movies.each do |movie| %>
-<p class="movie"><%= link_to "#{movie.title}", "/users/#{@user.id}/movies/#{movie.id}" %>
+<p class="movie"><%= link_to "#{movie.title}", "/movies/#{movie.id}" %>
   <%= movie.vote_average %></p>
 <% end %>

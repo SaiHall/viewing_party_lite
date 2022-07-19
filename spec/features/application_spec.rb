@@ -21,8 +21,10 @@ RSpec.describe 'the application layout page', type: :feature do
 
   it 'has a link to home from user discover spec' do
     user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'no-u', password_confirmation: 'no-u')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user1)
 
-    visit "/users/#{user1.id}/discover"
+
+    visit "/discover"
 
     click_link("Home")
 

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def discover
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def user_params

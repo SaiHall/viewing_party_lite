@@ -30,8 +30,8 @@ RSpec.describe "User Dash/Show page", type: :feature do
 
     click_button("Discover Movies")
 
-    expect(current_path).to eq("/users/#{@user2.id}/discover")
-    expect(current_path).to_not eq("/users/#{@user1.id}/discover")
+    expect(current_path).to eq("/discover")
+    # expect(current_path).to_not eq("/users/#{@user1.id}/discover")
   end
 
   describe 'viewing party section' do
@@ -112,7 +112,7 @@ RSpec.describe "User Dash/Show page", type: :feature do
 
       click_link("Spirited Away")
 
-      expect(page).to have_current_path("/users/#{@user3.id}/movies/#{@spirit.movie_id}")
+      expect(page).to have_current_path("/movies/#{@spirit.movie_id}")
     end
   end
 end
