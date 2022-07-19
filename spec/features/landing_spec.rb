@@ -50,4 +50,13 @@ RSpec.describe 'the landing page', type: :feature do
     click_link("Log In")
     expect(page).to have_current_path('/login')
   end
+
+  it 'has a logout option if a user is logged in' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+
+    visit '/'
+
+    expect(page).to have_link("Log Out")
+    expect(page).to_not have_link("Log In")
+  end
 end
