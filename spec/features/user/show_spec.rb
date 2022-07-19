@@ -42,6 +42,7 @@ RSpec.describe "User Dash/Show page", type: :feature do
     visit "/dashboard"
 
     expect(page).to have_current_path('/')
+    expect(page).to have_content("Please log in of register to view this page")
   end
 
   describe 'viewing party section' do
