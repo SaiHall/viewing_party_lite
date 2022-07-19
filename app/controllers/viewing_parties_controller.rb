@@ -10,7 +10,7 @@ class ViewingPartiesController < ApplicationController
     if !current_user
       @movie = MovieFacade.create_movie_details(params[:movie_id])
       redirect_to "/movies/#{@movie.id}"
-      flash[:notice] = "Please log in of register to create a viewing party"
+      flash[:notice] = "Please log in or register to create a viewing party"
     end
   end
 end
